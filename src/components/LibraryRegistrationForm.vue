@@ -52,6 +52,8 @@ const errors = ref({
   reason: null
 })
 
+const reasonMessage = ref(null)
+
 const validateName = (blur) => {
   if (formData.value.username.length < 3) {
     if (blur) errors.value.username = 'Name must be at least 3 characters'
@@ -98,6 +100,23 @@ const validationConfirmPassword = (blur) => {
 }
 
 const mask = (s = '')=>'•'.repeat(Math.min((s || '').length || 0,12))
+
+const validateReason = (blur) => {
+  const text = (formData.value.reason ||'').toLowerCase().trim()
+  if(!text){
+    if(blur){
+      errors.value.reason = 'Reason is required'
+      reasonMessage.value = null
+    }
+    return
+  }
+  errors.value.reason = null
+  if(text.includes('friend')){
+    reasonMessage.value = 'Great to have a friend'
+  } else{
+    reasonMessage.value = null
+  }
+}
 </script>
 
 <template>
@@ -184,7 +203,11 @@ const mask = (s = '')=>'•'.repeat(Math.min((s || '').length || 0,12))
               id="reason"
               rows="3"
               v-model="formData.reason"
+              @blur="validateReason(true)"
+              @input="validateReason(false)"
             ></textarea>
+            <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
+            <div v-if="reasonMessage" class="text-success">{{ reasonMessage }}</div>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary me-2">Submit</button>
