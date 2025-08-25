@@ -11,9 +11,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@primevue/themes": "^4.0.4",
+    "@primevue/themes": "^4.3.7",
     "bootstrap": "^5.3.3",
-    "primevue": "^4.0.4",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.7",
     "vue": "^3.4.29"
   },
   "devDependencies": {

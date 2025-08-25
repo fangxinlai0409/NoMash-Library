@@ -6,6 +6,7 @@ import Column from 'primevue/column'
 const formData = ref({
   username: '',
   password: '',
+  confirmPassword: '',
   isAustralian: false,
   reason: '',
   gender: ''
@@ -16,6 +17,7 @@ const submittedCards = ref([])
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
+  validationConfirmPassword(true)
   if (!errors.value.username && !errors.value.password) {
     submittedCards.value.push({ ...formData.value })
     clearForm()
@@ -26,15 +28,25 @@ const clearForm = () => {
   formData.value = {
     username: '',
     password: '',
+    confirmPassword: '',
     isAustralian: false,
     reason: '',
     gender: ''
+  }
+  errors.value = {
+    username: null,
+    password: null,
+    confirmPassword: null,
+    resident: null,
+    gender: null,
+    reason: null
   }
 }
 
 const errors = ref({
   username: null,
   password: null,
+  confirmPassword: null,
   resident: null,
   gender: null,
   reason: null
@@ -69,18 +81,34 @@ const validatePassword = (blur) => {
   } else {
     errors.value.password = null
   }
+  validationConfirmPassword(false)
 }
+
+const validationConfirmPassword = (blur) => {
+  const pwd = (formData.value.password || '').trim()
+  const cpw = (formData.value.confirmPassword || '').trim()
+  let msg = null
+  if(!cpw){
+    if(blur) msg = 'Please confirm your password'
+  } else if (pwd !== cpw){
+    if(blur) msg = 'Passwords do not match'
+  }
+  if (blur) errors.value.confirmPassword = msg
+  return !msg
+}
+
+const mask = (s = '')=>'•'.repeat(Math.min((s || '').length || 0,12))
 </script>
 
 <template>
-  <!-- 🗄️ W3. Library Registration Form -->
+  <!-- 🗄️ W5. Library Registration Form -->
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <h1 class="text-center">🗄️ W4. Library Registration Form</h1>
+        <h1 class="text-center">🗄️ W5. Library Registration Form</h1>
         <p class="text-center">
           This form now includes validation. Registered users are displayed in a data table below
-          (PrimeVue).
+          (PrimeVue). 
         </p>
         <form @submit.prevent="submitForm">
           <div class="row mb-3">
@@ -98,18 +126,43 @@ const validatePassword = (blur) => {
             </div>
 
             <div class="col-md-6 col-sm-6">
+              <label for="gender" class="form-label">Gender</label>
+              <select class="form-select" id="gender" v-model="formData.gender" required>
+                <option value="" disabled>Select..</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6 col-sm-6">
               <label for="password" class="form-label">Password</label>
               <input
                 type="password"
                 class="form-control"
                 id="password"
-                @blur="() => validatePassword(true)"
-                @input="() => validatePassword(false)"
+                @blur="validatePassword(true)"
+                @input="validatePassword(false)"
                 v-model="formData.password"
               />
               <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
             </div>
+            <div class="col-md-6 col-sm-6">
+              <label for="confirm-password" class="form-label">Confirm password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirm-password"
+                v-model="formData.confirmPassword"
+                @blur="validationConfirmPassword(true)"
+              />
+              <div v-if="errors.confirmPassword" class="text-danger">
+                {{ errors.confirmPassword }}
+              </div>
+            </div>
           </div>
+
           <div class="row mb-3">
             <div class="col-md-6 col-sm-6">
               <div class="form-check">
@@ -122,14 +175,7 @@ const validatePassword = (blur) => {
                 <label class="form-check-label" for="isAustralian">Australian Resident?</label>
               </div>
             </div>
-            <div class="col-md-6 col-sm-6">
-              <label for="gender" class="form-label">Gender</label>
-              <select class="form-select" id="gender" v-model="formData.gender" required>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+            <div class="col-md-6 col-sm-6"></div>
           </div>
           <div class="mb-3">
             <label for="reason" class="form-label">Reason for joining</label>
@@ -153,7 +199,9 @@ const validatePassword = (blur) => {
     <h4>This is a Primevue Datatable.</h4>
     <DataTable :value="submittedCards" tableStyle="min-width: 50rem">
       <Column field="username" header="Username"></Column>
-      <Column field="password" header="Password"></Column>
+      <Column field="password" header="Password">
+        <template #body="{data}">{{ mask(data.password) }}</template>
+      </Column>
       <Column field="isAustralian" header="Australian Resident"></Column>
       <Column field="gender" header="Gender"></Column>
       <Column field="reason" header="Reason"></Column>
@@ -171,7 +219,7 @@ const validatePassword = (blur) => {
         <div class="card-header">User Information</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Username: {{ card.username }}</li>
-          <li class="list-group-item">Password: {{ card.password }}</li>
+          <li class="list-group-item">Password: {{ mask(card.password) }}</li>
           <li class="list-group-item">
             Australian Resident: {{ card.isAustralian ? 'Yes' : 'No' }}
           </li>
