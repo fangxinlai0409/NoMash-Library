@@ -2,20 +2,59 @@
   <!-- Using Bootstrap's Header template (starter code) -->
   <!-- https://getbootstrap.com/docs/5.0/examples/headers/ -->
   <div class="container">
-    <header class="d-flex justify-content-center py-3">
+    <header class="d-flex justify-content-between align-items-center py-3">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active" aria-current="page"
-            >Home (Week 5)</router-link
-          >
+          <router-link to="/" class="nav-link" active-class="active" aria-current="page">
+            Home (Week 5)
+          </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/about" class="nav-link" active-class="active">About</router-link>
+          <router-link to="/about" class="nav-link" active-class="active">
+            About
+          </router-link>
         </li>
+<li class="nav-item">
+  <router-link :to="{ name: 'FireLogin' }" class="nav-link" active-class="active">Firebase Login</router-link>
+</li>
+<li class="nav-item">
+  <router-link :to="{ name: 'FireRegister' }" class="nav-link" active-class="active">Firebase Register</router-link>
+</li>
       </ul>
+
+      <div class="d-flex">
+        <router-link
+          v-if="!authed"
+          to="/login"
+          class="btn btn-outline-primary btn-sm"
+        >
+          Login
+        </router-link>
+        <button
+          v-else
+          class="btn btn-primary btn-sm"
+          @click="onLogout"
+        >
+          Logout
+        </button>
+      </div>
     </header>
   </div>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { isAuthenticated, logout } from '@/auth' 
+
+const router = useRouter()
+const authed = computed(() => isAuthenticated.value)
+
+const onLogout = () => {
+  logout()
+  router.push({ name: 'Login' }) 
+}
+</script>
 
 <style scoped>
 .b-example-divider {
