@@ -5,6 +5,8 @@ import LoginView from '@/views/LoginView.vue'
 import { isAuthenticated } from '@/auth'
 import FirebaseSigninView from '@/views/FirebaseSigninView.vue'
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
+import AddBookView from '@/views/AddBookView.vue'
+import BookManager from '@/components/BookManager.vue'
 
 const routes = [
   { path: '/',        name: 'Home',     component: HomeView },
@@ -12,6 +14,8 @@ const routes = [
   { path: '/login',   name: 'Login',    component: LoginView },
   { path: '/signin',  name: 'FireLogin',    component: FirebaseSigninView },    // or '/firelogin'
   { path: '/register',name: 'FireRegister', component: FirebaseRegisterView },  // or '/fireregister'
+  { path: '/addbook',  name: 'AddBook', component:AddBookView},
+  { path: '/managebooks', name:'ManageBooo', component: BookManager},
   { path: '/:pathMatch(.*)*', redirect: '/' }  
 ]
 

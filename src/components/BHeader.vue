@@ -14,6 +14,12 @@
             About
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/addbook" class="nav-link" active-class="active">Add Book</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/managebooks" class="nav-link" active-class="active">Manage Book</router-link>
+        </li>
 <li class="nav-item">
   <router-link :to="{ name: 'FireLogin' }" class="nav-link" active-class="active">Firebase Login</router-link>
 </li>
