@@ -7,6 +7,8 @@ import FirebaseSigninView from '@/views/FirebaseSigninView.vue'
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
 import AddBookView from '@/views/AddBookView.vue'
 import BookManager from '@/components/BookManager.vue'
+import Logout from '@/views/Logout.vue'
+import Admin from '@/views/Admin.vue'
 
 const routes = [
   { path: '/',        name: 'Home',     component: HomeView },
@@ -16,6 +18,8 @@ const routes = [
   { path: '/register',name: 'FireRegister', component: FirebaseRegisterView },  // or '/fireregister'
   { path: '/addbook',  name: 'AddBook', component:AddBookView},
   { path: '/managebooks', name:'ManageBooo', component: BookManager},
+  { path: '/logout', component: Logout },
+  { path: '/admin', component: Admin },
   { path: '/:pathMatch(.*)*', redirect: '/' }  
 ]
 

@@ -26,6 +26,12 @@
 <li class="nav-item">
   <router-link :to="{ name: 'FireRegister' }" class="nav-link" active-class="active">Firebase Register</router-link>
 </li>
+<li class="nav-item">
+  <router-link to="/logout" class="nav-link" active-class="active">Firebase Logout</router-link>
+</li>
+<li class="nav-item">
+  <router-link to="/admin" class="nav-link" active-class="active">Admin</router-link>
+</li>
       </ul>
 
       <div class="d-flex">
