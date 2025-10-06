@@ -41,22 +41,18 @@ exports.capitalizeBookName = onDocumentCreated(
     },
 );
 
-exports.getAllBooks = require("firebase-functions")
-    .region("australia-southeast1")
-    .https.onRequest(async (req, res) => {
-      const admin = require("firebase-admin");
-      const cors = require("cors")({origin: true});
-      cors(req, res, async () => {
-        try {
-          const snapshot = await admin.firestore().collection("books").get();
-          const books = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          res.status(200).json(books);
-        } catch (error) {
-          console.error("Error fetching books:", error);
-          res.status(500).send("Error fetching books");
-        }
-      });
-    });
+exports.getAllBooks = onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const snapshot = await admin.firestore().collection("books").get();
+      const books = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      res.status(200).json(books);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      res.status(500).send("Error fetching books");
+    }
+  });
+});

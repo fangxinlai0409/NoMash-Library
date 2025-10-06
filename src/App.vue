@@ -17,7 +17,7 @@ export default {
   components: { BHeader },
   computed: {
     showHeader() {
-      const hiddenRoutes = ["CountBookAPI"];
+      const hiddenRoutes = ["CountBookAPI","GetAllBookAPI"];
       return !hiddenRoutes.includes(this.$route.name);
     },
   },
