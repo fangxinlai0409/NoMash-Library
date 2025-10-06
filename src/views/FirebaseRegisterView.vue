@@ -35,7 +35,7 @@ import db from '@/firebase/init.js'
 
 const email = ref('')
 const password = ref('')
-const role = ref('member') // 默认角色
+const role = ref('member') 
 const loading = ref(false)
 const errorMsg = ref('')
 const router = useRouter()

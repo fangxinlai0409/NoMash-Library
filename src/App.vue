@@ -1,14 +1,29 @@
-<script setup>
-import BHeader from './components/BHeader.vue'
+<template>
+  <div class="main-container">
+    <header v-if="showHeader">
+      <BHeader />
+    </header>
+    <main class="main-box">
+      <router-view />
+    </main>
+  </div>
+</template>
+
+<script>
+import BHeader from "./components/BHeader.vue";
+
+export default {
+  name: "App",
+  components: { BHeader },
+  computed: {
+    showHeader() {
+      const hiddenRoutes = ["CountBookAPI"];
+      return !hiddenRoutes.includes(this.$route.name);
+    },
+  },
+};
 </script>
 
-<template>
-  <BHeader />
-
-  <main class="app-container container my-5">
-    <router-view />
-  </main>
-</template>
 
 <style>
 

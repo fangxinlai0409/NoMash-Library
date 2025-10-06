@@ -9,6 +9,9 @@ import AddBookView from '@/views/AddBookView.vue'
 import BookManager from '@/components/BookManager.vue'
 import Logout from '@/views/Logout.vue'
 import Admin from '@/views/Admin.vue'
+import GetBookCountView from '@/views/GetBookCountView.vue'
+import WeatherView from '@/views/WeatherView.vue'
+import CountBookAPI from '@/views/CountBookAPI.vue'
 
 const routes = [
   { path: '/',        name: 'Home',     component: HomeView },
@@ -17,9 +20,12 @@ const routes = [
   { path: '/signin',  name: 'FireLogin',    component: FirebaseSigninView },    // or '/firelogin'
   { path: '/register',name: 'FireRegister', component: FirebaseRegisterView },  // or '/fireregister'
   { path: '/addbook',  name: 'AddBook', component:AddBookView},
-  { path: '/managebooks', name:'ManageBooo', component: BookManager},
+  { path: '/managebooks', name:'ManageBook', component: BookManager},
   { path: '/logout', component: Logout },
   { path: '/admin', component: Admin },
+  { path: '/GetBookCount', name:'GetBookCount',component:GetBookCountView},
+  { path: '/WeatherCheck', name:'WeatherCheck', component: WeatherView},
+  { path: '/CountBookAPI', name:'CountBookAPI', component: CountBookAPI},
   { path: '/:pathMatch(.*)*', redirect: '/' }  
 ]
 
