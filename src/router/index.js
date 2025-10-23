@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -31,10 +31,9 @@ const routes = [
   { path: '/:pathMatch(.*)*', redirect: '/' }  
 ]
 
-
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+  history: createWebHashHistory(),
+  routes,
 })
 
 router.beforeEach((to, from, next) => {
